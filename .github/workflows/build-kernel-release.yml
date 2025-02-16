@@ -4,14 +4,14 @@ permissions:
   contents: write  # Allow writing to repository contents (for pushing tags)
   actions: write   # Allows triggering actions
   
-on:
+于:
   workflow_dispatch:
     inputs:
       make_release:
         description: 'Do you want to create a release?'
         required: true
         type: boolean
-        default: true
+        默认: true
       runner:
         description: "Choose runner"
         required: true
@@ -19,7 +19,7 @@ on:
         options:
           - ubuntu-22.04
           - ubuntu-22.04-local
-        default: ubuntu-22.04
+        默认: ubuntu-22.04
       lto_type:
         description: "Choose LTO type (full will not run on basic runners)"
         required: true
@@ -28,16 +28,16 @@ on:
           - full
           - thin
           - none
-        default: thin
+        默认: thin
       kernelsu_variant:
         description: "Choose KernelSU"
         required: true
         type: choice
         options:
           - Official
-          - Next
+          - 下一页
           - MKSU
-        default: Next
+        默认: 下一页
       kernelsu_branch:
         description: "Choose ksu branch"
         required: true
@@ -46,12 +46,12 @@ on:
           - Stable
           - Dev
           - Other
-        default: Stable
+        默认: Stable
       kernelsu_branch_other:
         description: "If 'Other' is selected, specify your custom branch"
         required: false
         type: string  # This input is required if 'Other' is chosen
-        default: ""  # Default is empty, but can be filled in if 'Other' is selected
+        默认: ""  # Default is empty, but can be filled in if 'Other' is selected
 
 jobs:
   build-kernel-a12-5-10:
@@ -63,49 +63,6 @@ jobs:
       kernelsu_variant: ${{ inputs.kernelsu_variant }}
       kernelsu_branch: ${{ inputs.kernelsu_branch }}
       kernelsu_branch_other: ${{ inputs.kernelsu_branch_other }}
-
-  build-kernel-a13-5-10:
-    uses: ./.github/workflows/kernel-a13-5.10.yml
-    secrets: inherit
-    with:
-      runner: ${{ inputs.runner }}
-      lto_type: ${{ inputs.lto_type }}
-      kernelsu_variant: ${{ inputs.kernelsu_variant }}
-      kernelsu_branch: ${{ inputs.kernelsu_branch }}
-      kernelsu_branch_other: ${{ inputs.kernelsu_branch_other }}
-
-  build-kernel-a13-5-15:
-    uses: ./.github/workflows/kernel-a13-5.15.yml
-    secrets: inherit
-    with:
-      runner: ${{ inputs.runner }}
-      lto_type: ${{ inputs.lto_type }}
-      kernelsu_variant: ${{ inputs.kernelsu_variant }}
-      kernelsu_branch: ${{ inputs.kernelsu_branch }}
-      kernelsu_branch_other: ${{ inputs.kernelsu_branch_other }}
-
-  build-kernel-a14-5-15:
-    uses: ./.github/workflows/kernel-a14-5.15.yml
-    secrets: inherit
-    with:
-      runner: ${{ inputs.runner }}
-      lto_type: ${{ inputs.lto_type }}
-      kernelsu_variant: ${{ inputs.kernelsu_variant }}
-      kernelsu_branch: ${{ inputs.kernelsu_branch }}
-      kernelsu_branch_other: ${{ inputs.kernelsu_branch_other }}
-
-  build-kernel-a14-6-1:
-    uses: ./.github/workflows/kernel-a14-6.1.yml
-    secrets: inherit
-    with:
-      runner: ${{ inputs.runner }}
-      lto_type: ${{ inputs.lto_type }}
-      kernelsu_variant: ${{ inputs.kernelsu_variant }}
-      kernelsu_branch: ${{ inputs.kernelsu_branch }}
-      kernelsu_branch_other: ${{ inputs.kernelsu_branch_other }}
-
-  build-kernel-a15-6-6:
-    uses: ./.github/workflows/kernel-a15-6.6.yml
     secrets: inherit
     with:
       runner: ${{ inputs.runner }}
@@ -279,10 +236,6 @@ jobs:
           echo "${{ inputs.kernelsu_variant }}-${{ inputs.kernelsu_branch }}: [$KSU_REF]($KSU_URL)" >> $GITHUB_ENV
           echo "SUSFS4KSU:" >> $GITHUB_ENV
           echo "gki-android12-5.10: [$COMMIT_HASH_gki_android12_5_10]($COMMIT_URL_gki_android12_5_10)" >> $GITHUB_ENV
-          echo "gki-android13-5.10: [$COMMIT_HASH_gki_android13_5_10]($COMMIT_URL_gki_android13_5_10)" >> $GITHUB_ENV
-          echo "gki-android13-5.15: [$COMMIT_HASH_gki_android13_5_15]($COMMIT_URL_gki_android13_5_15)" >> $GITHUB_ENV
-          echo "gki-android14-5.15: [$COMMIT_HASH_gki_android14_5_15]($COMMIT_URL_gki_android14_5_15)" >> $GITHUB_ENV
-          echo "gki-android14-6.1: [$COMMIT_HASH_gki_android14_6_1]($COMMIT_URL_gki_android14_6_1)" >> $GITHUB_ENV
           echo "" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
           
